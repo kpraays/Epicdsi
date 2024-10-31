@@ -1,0 +1,2 @@
+### data format explained
+We had cwa files as input which were converted to csv data files. We processed the signal in these files which was at 100hz. It was resampled to 30hz and bandpass filter applied. Then data column was sliced at every third record leading to output at 10hz. Then runsum was applied which aggregated the values exceeding the threshold in the 10hz data output per record and the exceeding values were summed together for window size of 10 meaning we get the final output as per second.

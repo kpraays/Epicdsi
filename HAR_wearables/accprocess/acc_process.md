@@ -1,3 +1,6 @@
+### What was done?
+Applied accprocess using gnu parallel in batches of 40 threads (jobs).
+
 ### acc process command
 this is the file: /accel/capture24/participants/P001.csv
 command:
@@ -27,7 +30,7 @@ command:
 accProcess /accelerometer/accprocess/P001_m.csv --mgCpLPA 45 --mgCpMPA 100 --mgCpVPA 400 --activityClassification True --outputFolder results --verbose True --deleteIntermediateFiles False
 
 
-### this worked!!
+### Use accelerometer package to process accelerometer csv data
 accProcess /accel/capture24/participants/P001.csv --csvTimeFormat 'yyyy-MM-dd HH:mm:ss.SSSSSS' --csvTimeXYZTempColsIndex 0,1,2,3 --outputFolder /accelerometer/accprocess/results
 
 
