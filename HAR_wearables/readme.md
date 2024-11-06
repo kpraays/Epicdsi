@@ -72,13 +72,11 @@ This was done to calculate the proportions of moderate-vigourous, light, sedanta
     - PA3: We calculated this for 100,000 participants from raw cwa data.
         - This involved converting cwa data to csv data files and calculating acticounts for all participants. Then using cutoffs, epochs were mapped to activity category ranging from moderate-vigorous, light, sedentary. As the number of participants is so large and per participant, we have ~1GB sized csv file - this meant we had to distributed the computation over cluster using meta farm. Over 2 days, processing was done in batches of 800 jobs with upper bound of 1 hour per batch. Due to scheduling delays on cluster since we did not have exclusive access, final time taken was 2 days. More information: [cluster_UK_biobank](cluster_UK_biobank)
 
-the threhold count, for 60 second epoch is  
+
+The threhold count, for 60 second epoch is  
 Light: 0 - 2689 CPM
 Moderate: 2690 - 6166 CPM
 Vigorous: 6167 - 9642 CPM
 
 
 10. Foundation model
-
-11. 
-How does the whole picture fit? What is the purpose of this work?

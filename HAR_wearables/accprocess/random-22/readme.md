@@ -1,0 +1,1 @@
+Scripts to randomly select 22 participants from 100000 candidates in the UKBioBank dataset to apply accProcess on them for comparison with pre-calculated weekly proportions present in the UKBioBank dataset.
