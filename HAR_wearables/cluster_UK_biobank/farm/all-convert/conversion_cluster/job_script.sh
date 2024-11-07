@@ -4,7 +4,7 @@
 #SBATCH --time=1:0:0
 #SBATCH --mem=12G
 #  You have to replace Your_account_name below with the name of your account:
-#SBATCH --account=def-hiroshi
+#SBATCH --account=
 
 # Don't change this line:
 task.run

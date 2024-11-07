@@ -5,10 +5,10 @@
 #SBATCH --mem=4GB
 #SBATCH --time=0-00:29
 #SBATCH --output=./slurm_output/direc_%A_%a.out
-#SBATCH --mail-user=aayush.kapur@mail.mcgill.ca
+#SBATCH --mail-user=
 #SBATCH --mail-type=ALL
 #SBATCH --array=46-60
-#SBATCH --account=def-hiroshi
+#SBATCH --account=
 # ====================================
 
 source /home/kapmcgil/projects/def-hiroshi/kapmcgil/.csvkit/bin/activate

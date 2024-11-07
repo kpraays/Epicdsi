@@ -2,7 +2,7 @@
 
 2. Implemented random forest classifier for 100 participants of CAPTURE-24 dataset [https://ora.ox.ac.uk/objects/uuid:99d7c092-d865-4a19-b096-cc16440cd001] to compare the performance with reported findings from walmsley paper: [https://bjsm.bmj.com/content/56/18/1008#DC1].
 
-What is CAPTURE-24 dataset?
+**What is CAPTURE-24 dataset?**
 This dataset contains Axivity AX3 wrist-worn activity tracker data that were collected from 151 participants in 2014-2016 around the Oxfordshire area. Participants were asked to wear the device in daily living for a period of roughly 24 hours, amounting to a total of almost 4,000 hours. Vicon Autograph wearable cameras and Whitehall II sleep diaries were used to obtain the ground truth activities performed during the period (e.g. sitting watching TV, walking the dog, washing dishes, sleeping), resulting in more than 2,500 hours of labelled data. 
 
 3. Compared with cp values based on thresholding approach. Epochs were classified into activities based on thresholds of cp values.
@@ -18,8 +18,7 @@ This dataset contains Axivity AX3 wrist-worn activity tracker data that were col
 
 
 #### AccProcess custom
-4. AccProcess generates features from the csv values of the recorded accelerometer data of CAPTURE-24 dataset. That subset of features can be found [here](processAcc/features.txt). We 
-additionally generated percentile features per direction from accelerometer data hoping it will lead to greater accuracy because it will capture greater movement data separately but there was no significant improvement in accuracy.
+4. AccProcess generates features from the csv values of the recorded accelerometer data of CAPTURE-24 dataset. That subset of features can be found [here](processAcc/features.txt). We additionally generated percentile features per direction from accelerometer data hoping it will lead to greater accuracy because it will capture greater movement data separately but there was no significant improvement in accuracy.
 
 
 #### compare csv
@@ -80,3 +79,54 @@ Vigorous: 6167 - 9642 CPM
 
 
 10. Foundation model
+
+https://www.nature.com/articles/s41746-024-01062-3
+Self-supervised training relied on the unlabelled UK Biobank dataset, which contains roughly 700,000 person-days of free-living activity data (>100,000 participants, 7 days of wear).
+
+For the subsequent activity recognition benchmarks, number of people is based on the number of people in the labelled dataset used - https://www.nature.com/articles/s41746-024-01062-3/tables/4
+
+They adopted these 2 approaches: 1. Fine tuned all the layers 2. Fine tuning on the fully connected layers which map to final output classes.
+
+While pretraining the model, they used weighted sampling to give more weightage to epochs in the training data where there was high movement. During evaluation, when they used the labelled data to fine-tune the pre-trained model, we did not find them mentioning weighted sampling again.
+
+<hr>
+
+
+For practitioners, the single most important criteria is how little labelled data we need for the downstream training, assuming device location are all same (wrist, not pocket) across pre-train and fine-tune data.
+
+https://link.springer.com/article/10.1007/s10489-024-05322-3
+This is another well known paper that did self-supervised learning
+
+- They used a different approach to train the model. Nature paper used multi task learning keeping transformations as a way to learn representation of signals. In this paper, they used masked reconstruction whereby they hide a part of the signal intentionally and let the network predict that part, during which the network learns about the signal's representation.
+ 
+- At max they used 100k hours but nature paper had 700k person DAYS as training data.
+ 
+ 
+- Their data used two separate accelerometer devices while nature paper had single accelerometer used.
+ 
+- In this paper they say "The nature paper observed that the downstream results scale with the number of subjects and not necessarily with the number of samples per subject. However, only a single accelerometer was investigated". So, they show that increasing the amount of pre-training data to up to 100,000 hours can lead to better downstream performance using our architecture and auxiliary task, as well as a dual-accelerometer setup, although just marginally.
+ 
+ 
+- We think the evaluation section of nature paper had more comparisons and data used. They used their pre-trained model for fine-tuning across multiple different datasets. Fine-tuning had better focus in that paper. This paper is much better written though. It explains stuff in greater clarity than nature paper.
+ 
+
+Which pretrained model is better?
+- Both the models can be picked (Pre-trained model from this paper or from the nature paper) 
+1) finetuned on the same sets of labelled datasets and performance compared. 
+2) Both models can be used as feature extractor and classifier layer slapped on top to see how they perform on the same sets of labelled datasets to compare.
+ 
+- Maybe using two different accelerometers in training data for pre-trained model could be helpful. They say it's marginal but the comparison above could conclusively answer which model out of the two is better.
+
+- They used 22 subjects for downstream tasks.
+
+source
+"This work considers five publicly available and labeled datasets for downstream training (i.e., HAR). The first two (HARTH v1.2 and HAR70+) are, to the best of our knowledge, the only two labeled and publicly available HAR datasets with the same sensor setup as HUNT4. Therefore, our main focus of this work is on these two datasets. The remaining three (PAMAP2, Opportunity, and RealWorld) consist of recordings from multiple sensors and sensor placements. 
+ 
+HARTH v1.2: The first is the HARTH v1.2 [27]Footnote3. Twenty-two subjects were recorded for around 1.5 to 2 hours during their regular working hours in a free-living setting."
+ 
+<hr>
+
+
+We get raw data from unlabelled UKbiobank from which we make foundation model based on resNet. Then we use Canadian data to finetune the foundation model. Finally, we get the model trained for accelerometer data for Canadian contexts.
+
+![Self-supervised map](artefacts/self-supervised-map.png)
