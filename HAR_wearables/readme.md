@@ -1,3 +1,5 @@
+### What was done?
+
 1. Using accelerometer package, processed csv data files and predicted activities using walmsley model for CAPTURE-24 labelled dataset. Generated category classification for 30 second epochs using GNU parallel (40 jobs/ threads per batch).
 
 2. Implemented random forest classifier for 100 participants of CAPTURE-24 dataset [https://ora.ox.ac.uk/objects/uuid:99d7c092-d865-4a19-b096-cc16440cd001] to compare the performance with reported findings from walmsley paper: [https://bjsm.bmj.com/content/56/18/1008#DC1].
